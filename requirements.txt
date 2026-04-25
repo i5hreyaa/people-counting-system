@@ -1,0 +1,4 @@
+flask
+opencv-python
+python-dotenv
+ultralytics

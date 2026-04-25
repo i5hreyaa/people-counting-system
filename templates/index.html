@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>People Counting System</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #0b0f1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #00ff99;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #b8b8b8;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #121826;
+            border: 1px solid #243044;
+            border-radius: 18px;
+            padding: 24px;
+            margin: 25px auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .video-box {
+            border: 3px solid #00ff99;
+            border-radius: 14px;
+            overflow: hidden;
+            display: inline-block;
+            background: black;
+        }
+
+        .video-box img,
+        .result-img {
+            width: 100%;
+            max-width: 800px;
+            display: block;
+        }
+
+        .upload-box {
+            max-width: 520px;
+        }
+
+        input[type="file"] {
+            background: #0b0f1a;
+            border: 1px dashed #00ff99;
+            padding: 14px;
+            width: 90%;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        button, .back-btn {
+            background: #00ff99;
+            color: #06100b;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        button:hover, .back-btn:hover {
+            background: #00d982;
+        }
+
+        .info-box {
+            margin-top: 18px;
+            background: #1d2538;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 18px;
+        }
+
+        .result-status {
+            font-size: 22px;
+            margin-bottom: 18px;
+            color: #00ff99;
+        }
+
+        .section-title {
+            margin-top: 0;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>People Counting & Threshold Alert System</h1>
+    <p class="subtitle">Real-time camera and image-based detection using YOLOv8</p>
+
+    {% if not image_path %}
+
+    <div class="card">
+        <h2 class="section-title">Live Camera Detection</h2>
+
+        <div class="video-box">
+            <img src="{{ url_for('video') }}">
+        </div>
+
+        <div class="info-box">
+            Threshold Limit: {{ threshold }}
+        </div>
+    </div>
+
+    <div class="card upload-box">
+        <h2 class="section-title">Upload Image</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <br>
+            <button type="submit">Upload & Count People</button>
+        </form>
+    </div>
+
+    {% else %}
+
+    <div class="card">
+        <h2 class="section-title">Uploaded Image Result</h2>
+
+        <div class="result-status">
+            People Count: {{ image_count }} | Status: {{ image_status }}
+        </div>
+
+        <img src="{{ image_path }}" class="result-img">
+
+        <br><br>
+        <a href="/" class="back-btn">Back to Live Camera</a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
